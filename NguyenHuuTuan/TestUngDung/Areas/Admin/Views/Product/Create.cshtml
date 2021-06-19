@@ -1,0 +1,109 @@
+﻿@model ModelEF.Model.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary mr-3">Thông tin sản phẩm</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label" })
+                    <div>
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @disabled= true, @Value = ViewBag.ID } })
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label", })
+                    <div>
+                        @Html.EditorFor(model => model.Name, new { HtmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.UnitCost, htmlAttributes: new { @class = "control-label" })
+                    <div>
+                        @Html.TextBoxFor(model => model.UnitCost, new { data_type = "currency", @class = "form-control", @placeholder = "đ" })
+                        @Html.ValidationMessageFor(model => model.UnitCost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label" })
+                    <div>
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label", })
+
+                    <div class="custom-file">
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "custom-file-input", @type = "file", @accept = "image/*" } })
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+
+                    <div id="preview-image" class="preview-image preview-product d-flex flex-wrap">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label" })
+                    <div>
+                        @Html.DropDownListFor(model => model.ID_Category, (IEnumerable<SelectListItem>)ViewBag.CategoryList,
+                        new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ID_Category, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label", })
+                <div>
+                    @Html.TextAreaFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-warning mr-2" })
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+
+        }
+
+    </div>
+</div>
+
+@section script {
+    <script src="~/Assets/admin/js/currency.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="~/Assets/admin/js/preview.js"></script>
+    <script>
+        $(function () {
+            imagePreview('#Image');
+            $('#Image').on('change', function () {
+                var fileName = $(this).val();
+                $(this).next('.custom-file-label').html(fileName);
+            })
+            $('#Description').summernote({
+                maxHeight: 500,
+                minHeight: 250
+            })
+        })
+    </script>
+}

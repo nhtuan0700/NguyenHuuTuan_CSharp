@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ecommerce</title>
+    <meta name="description" content="Bootstrap template for you store - E-Commerce Bootstrap Template">
+    <meta name="keywords"
+          content="unistore, e-commerce bootstrap template, premium e-commerce bootstrap template, premium bootstrap template, bootstrap template, e-commerce, bootstrap template, sunrise digital">
+    <meta name="author" content="Sunrise Digital">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+    <!-- Bootstrap Template-->
+    <link href="~/Assets/public/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="~/Assets/public/dist/css/custom.css" rel="stylesheet">
+    <link href="~/Assets/public/dist/ionicons-2.0.1/css/ionicons.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Catamaran:400,100,300' rel='stylesheet' type='text/css'>
+    <link href="~/Assets/public/dist/css/carousel.css" rel="stylesheet">
+
+    <link href="~/Assets/public/css/custom.css" rel="stylesheet">
+    <link href="~/Assets/public/css/extends.css" rel="stylesheet">
+</head>
+
+<body>
+    @RenderPage("_Header.cshtml")
+
+    @RenderBody()
+
+    @RenderPage("_Footer.cshtml")
+    <div class="box-spinner d-none">
+        <div class="spinner-border" style="width: 45px; height: 45px;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Assets/public/dist/js/jquery-latest.min.js"></script>
+    <script src="~/Assets/public/dist/js/bootstrap.min.js"></script>
+    <script src="~/Assets/public/dist/js/core.js"></script>
+    <script src="~/Assets/public/dist/js/carousel.js"></script>
+
+    <script src="~/Assets/public/js/active-link.js"></script>
+    <script src="~/Assets/public/js/js.js"></script>
+
+    @*@yield('script')*@
+    @RenderSection("script", false)
+</body>
+
+</html>

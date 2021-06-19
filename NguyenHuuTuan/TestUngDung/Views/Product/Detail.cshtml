@@ -1,0 +1,48 @@
+﻿@model ModelEF.Model.Product
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr class="offset-lg">
+<div class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-md-7">
+                <div class="carousel product" data-count="5" data-current="1">
+                    <!-- <button class="btn btn-control"></button> -->
+
+                    <div class="items">
+                        <div class="item active" data-marker="1">
+                            <img src="~/Upload/Product/@Model.Image" />
+                        </div>
+                    </div>
+
+                    <ul class="markers">
+                        <li data-marker="1" class="active">
+                            <img src="~/Upload/Product/@Model.Image"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-5 col-md-5">
+                <h1>@Html.DisplayFor(model => model.Name)</h1>
+                <p>@Html.DisplayFor(model => model.Category.Name)</p>
+                <p class="price">@Html.DisplayFor(model => model.UnitCost)</p>
+                <br><br>
+
+                <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <div class="col-sm-7">
+                <h1>@Html.DisplayFor(model => model.Name)</h1>
+                <br>
+                @Html.Raw(Model.Description)
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>

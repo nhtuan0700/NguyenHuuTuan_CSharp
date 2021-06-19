@@ -1,0 +1,132 @@
+﻿@using PagedList.Mvc
+@using PagedList
+@model IEnumerable<ModelEF.Model.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid p-0">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex align-items-center justify-content-between">
+            <div class=" d-flex align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary mr-3">Quản lý sản phẩm</h6>
+                @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-success" })
+            </div>
+            <div>
+                @using (Html.BeginForm("Index", "", FormMethod.Get, new { @class = "d-flex align-items-center" }))
+                {
+                    @Html.TextBox("name", (string)ViewBag.Name, new { @class = "form-control", @placeholder = "Tên sản phẩm..." })
+                    @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Tất cả",
+                    new { @class = "form-control mr-2 ml-2" })
+                    <button class="btn btn-secondary w-75">Tìm kiếm</button>
+                }
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th width="15%">
+                                            @Html.DisplayNameFor(model => model.ID)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UnitCost)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Quantity)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Category)
+                                        </th>
+                                        <th width="15%">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnitCost)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Category.Name)
+                                        </td>
+                                        <td>
+                                            <div class="row d-flex justify-content-center">
+                                                @Html.ActionLink("Chi tiết", "Edit", new { id = item.ID }, new { @class = "btn btn-info col-md-5 mr-2" })
+                                                @using (Html.BeginForm("Delete", "Product", new { id = item.ID }, FormMethod.Post, new { @class = "col-md-5 d-block p-0" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-danger btn-delete">Xóa</button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+                                    new { page, name = ViewBag.Name, category = Request["category"] }),
+                                    new PagedListRenderOptions
+                                    {
+                                        LiElementClasses = new string[] { "page-item" },
+                                    })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(function () {
+            $('.btn-delete').click(function (e) {
+                e.preventDefault();
+                swal({
+                    title: "Xác nhận?",
+                    text: "Sản phẩm này sẽ bị xóa?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $(this).parent().submit();
+                        }
+                    });
+            })
+        })
+    </script>
+}
+

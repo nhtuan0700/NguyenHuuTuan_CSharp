@@ -1,0 +1,109 @@
+﻿@using PagedList.Mvc
+@using PagedList
+@model IEnumerable<ModelEF.Model.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr class="offset-lg">
+
+<div class="container tags">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="ion-arrow-down-b"></i> Sorting by name
+        </button>
+        <ul class="dropdown-menu">
+            <li class="active"><a href="#"> <i class="ion-arrow-down-c"></i> Name [A-Z]</a></li>
+            <li><a href="#"> <i class="ion-arrow-up-c"></i> Name [Z-A]</a></li>
+            <li><a href="#"> <i class="ion-arrow-down-c"></i> Price [Low-High]</a></li>
+            <li><a href="#"> <i class="ion-arrow-up-c"></i> Price [High-Low]</a></li>
+        </ul>
+    </div>
+
+    <p>Search by tags</p>
+    <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-default btn-xs active">
+            <input type="radio" name="options" id="option1" checked> All products
+        </label>
+        <label class="btn btn-default btn-xs">
+            <input type="radio" name="options" id="option2"> Business
+        </label>
+        <label class="btn btn-default btn-xs">
+            <input type="radio" name="options" id="option3"> Home
+        </label>
+        <label class="btn btn-default btn-xs">
+            <input type="radio" name="options" id="option4"> Mobility
+        </label>
+        <label class="btn btn-default btn-xs">
+            <input type="radio" name="options" id="option5"> Powerfull
+        </label>
+        <label class="btn btn-default btn-xs">
+            <input type="radio" name="options" id="option6"> Gaming
+        </label>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- Filter -->
+        <div class="col-sm-3 filter">
+            <div class="item">
+                <div class="title">
+                    <a href="#clear" data-action="open" class="down"> <i class="ion-android-arrow-dropdown"></i> Open</a>
+                    <a href="#clear" data-action="clear"> <i class="ion-ios-trash-outline"></i> Clear</a>
+                    <h1 class="h4">Type</h1>
+                </div>
+                <div class="controls">
+                    @foreach (var item in ViewBag.CategoryList)
+                    {
+                        <div class="checkbox-group" data-status="inactive">
+                            <div class="checkbox"><i class="ion-android-done"></i></div>
+                            <div class="label" data-value="Hybrid">@item.Name</div>
+                            <input type="checkbox" name="checkbox" value="">
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <br>
+        </div>
+        <!-- /// -->
+        <!-- Products -->
+        <div class="col-sm-9 products">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                <div class="col-sm-6 col-md-4 product" title="@item.Name">
+                    <a href="@Url.Action("Detail", "Product", new { id = item.ID })">
+                        <img src="~/Upload/Product/@item.Image" alt="HP Chromebook 14" />
+                    </a>
+                    <div class="content">
+                        <h4><a href="@Url.Action("Detail", "Product", new { id = item.ID })">
+                            @Html.DisplayFor(modelItem => item.Name)</a>
+                        </h4>
+                        <p class="price">@Html.DisplayFor(modelItem => item.UnitCost)</p>
+                        <label>@Html.DisplayFor(modelItem => item.Category.Name)</label>
+
+                        <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <nav>
+                <ul class="pagination">
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+                                    new { page }),
+                                    new PagedListRenderOptions
+                                    {
+                                        LiElementClasses = new string[] { "page-item" },
+                                    })
+                </ul>
+            </nav>
+        </div>
+        <!-- /// -->
+    </div>
+</div>
+<br><br>

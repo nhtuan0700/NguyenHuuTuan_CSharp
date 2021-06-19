@@ -1,0 +1,30 @@
+﻿body {
+
+}
+.preview-image .contain-image {
+    max-width: 180px;
+    height: 180px;
+    padding: 10px;
+    background: #fafafa;
+    margin: 10px
+}
+
+img {
+    height: 100%;
+}
+
+.preview-image .contain-image img {
+    width: 100%;
+    object-fit: contain;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.thumbnail {
+    max-width: 80px;
+    height: 80px
+}
