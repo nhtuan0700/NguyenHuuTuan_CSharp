@@ -20,7 +20,7 @@
                 {
                     @Html.TextBox("name", (string)ViewBag.Name, new { @class = "form-control", @placeholder = "Tên sản phẩm..." })
                     @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "Tất cả",
-                    new { @class = "form-control mr-2 ml-2" })
+                        new { @class = "form-control mr-2 ml-2" })
                     <button class="btn btn-secondary w-75">Tìm kiếm</button>
                 }
             </div>
